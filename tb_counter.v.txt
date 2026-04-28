@@ -1,0 +1,35 @@
+// Code your testbench here
+// or browse Examples
+`timescale 1ns/1ps
+module tb;
+reg clk;
+reg rstn;
+reg en;
+wire [3:0] q;
+
+ //Instantiate counter(connect design module with testbench)
+  counter uut(
+    .clk(clk),
+    .rstn(rstn),
+    .en(en),
+    .q(q)
+  );
+
+//clock generation
+always #5 clk= ~clk;
+
+//Test sequence
+initial begin
+  $dumpfile("wave.vcd");
+  $dumpvars(0, tb);
+  clk=0;
+  rstn=0;
+  en=0;
+  
+  #10 rstn=1;
+  #10 en=1;
+  
+  #100 $finish;
+  
+end
+endmodule
